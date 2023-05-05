@@ -10,4 +10,4 @@ LET'S BUILD!
 **HOLD ON**
 
 I was made aware of BRC20s shortcomings and am now trying to create a new envelope together with ChatGPT, it can be found here: 
-## [Fungible token dedicated envelope experiment (https://github.com/DanM3rcurius/BRC20-SwapContract/tree/main/Documentation/FT%20Envelope)
+## [Fungible token dedicated envelope experiment](https://github.com/DanM3rcurius/BRC20-SwapContract/tree/main/Documentation/FT%20Envelope)
