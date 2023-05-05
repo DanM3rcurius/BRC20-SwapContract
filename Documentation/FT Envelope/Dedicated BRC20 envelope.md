@@ -9,6 +9,8 @@ With this envelope **it should be less difficult** to create a DeFi ecosystem on
 <p> This is highly experimental tech, tread carefully, you could loose everything to the dragons beyond.</p>
 </div>
 
+#### [Here is the migration script documentation](https://github.com/DanM3rcurius/BRC20-SwapContract/blob/main/Documentation/FT%20Envelope/BRC20%20New%20Envelope%20Migration%20Script.md)
+
 ## A new token envelope
 I fed ChatGPT with the ord envelope code and asked to add double spend mitigation and DBC20 backward compatibility. This is what it answered:
 
