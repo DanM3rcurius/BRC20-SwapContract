@@ -8,6 +8,10 @@ With the new envelope **it should be less difficult** to create a DeFi ecosystem
 <h4>Warning</h4>
 <p> This is highly experimental tech, tread carefully, you could loose everything to the dragons beyond.</p>
 </div>
+
+#### [Here's the documentationon the envelope](https://github.com/DanM3rcurius/BRC20-SwapContract/blob/main/Documentation/FT%20Envelope/Dedicated%20BRC20%20envelope.md)
+
+## Script
 A Miniscript implementation for the migration of BRC-20 tokens from the old envelope to the new one:
 
 ```
