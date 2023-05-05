@@ -1,4 +1,4 @@
-# Dedicated BRC20 Envelope (Dick-E)
+# Dedicated BRC20 Envelope (DBC20)
 This is an experiment to create a new envelope for fungible tokens on bitcoin in cooperation with ChatGPT.
 The goal is to better distribute the load and complexity that fungible tokens add in the ord envelope that was meant for non fungible tokens.
 With this envelope **it should be less difficult** to create a DeFi ecosystem on bitcoin, with Swaps, DEXs, loans and all.
