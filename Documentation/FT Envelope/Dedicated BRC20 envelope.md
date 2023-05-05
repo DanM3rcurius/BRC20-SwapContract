@@ -260,3 +260,97 @@ Test Case 10: Retrieving BRC-20 Token Holder List
 - Add liquidity to the pool.
 - Attempt to transfer BRC20 tokens from user A to user B with an incorrect password.
 - Verify that the transfer fails and user A's balance remains unchanged.
+
+## Unit Tests
+
+### Test adding liquidity:
+
+   ```
+def test_add_liquidity():
+    pool = LiquidityPool()
+    abc_token = Token(name="ABC", symbol="ABC")
+    btc_token = Token(name="Bitcoin", symbol="BTC")
+    abc_amount = 1000
+    btc_amount = 1
+    user_address = "user_address"
+    
+    # add liquidity to the pool
+    pool.add_liquidity(abc_token, abc_amount, btc_token, btc_amount, user_address)
+    
+    # verify that tokens were transferred to the pool
+    assert abc_token.balance_of(pool.address) == abc_amount
+    assert btc_token.balance_of(pool.address) == btc_amount
+    
+    # verify that pool balances were updated
+    assert pool.get_liquidity(abc_token, btc_token) == (abc_amount, btc_amount)
+    
+   ```
+### Test removing liquidity:
+   ```
+def test_remove_liquidity():
+    pool = LiquidityPool()
+    abc_token = Token(name="ABC", symbol="ABC")
+    btc_token = Token(name="Bitcoin", symbol="BTC")
+    abc_amount = 1000
+    btc_amount = 1
+    user_address = "user_address"
+    
+    # add liquidity to the pool
+    pool.add_liquidity(abc_token, abc_amount, btc_token, btc_amount, user_address)
+    
+    # remove liquidity from the pool
+    pool.remove_liquidity(abc_token, abc_amount, btc_token, btc_amount, user_address)
+    
+    # verify that tokens were transferred back to the user
+    assert abc_token.balance_of(user_address) == abc_amount
+    assert btc_token.balance_of(user_address) == btc_amount
+    
+    # verify that pool balances were updated
+    assert pool.get_liquidity(abc_token, btc_token) == (0, 0)
+```
+
+### Test trading with positive slippage:
+
+  ```
+def test_trade_positive_slippage():
+    pool = LiquidityPool()
+    abc_token = Token(name="ABC", symbol="ABC")
+    btc_token = Token(name="Bitcoin", symbol="BTC")
+    abc_amount = 1000
+    btc_amount = 1
+    user_address = "user_address"
+    
+    # add liquidity to the pool
+    pool.add_liquidity(abc_token, abc_amount, btc_token, btc_amount, user_address)
+    
+    # simulate a positive slippage trade
+    trade_amount = 500
+    expected_btc_amount = 0.5
+    actual_btc_amount = pool.trade(abc_token, trade_amount, btc_token, user_address)
+    
+    # verify that the trade executed at the expected price
+    assert actual_btc_amount == expected_btc_amount
+    assert abc_token.balance_of(pool.address) == (abc_amount + trade_amount)
+    assert btc_token.balance_of(pool.address) == (btc_amount - expected_btc_amount)
+    
+  ```
+    
+### Test trading with negative slippage:
+
+  ```
+def test_trade_negative_slippage():
+    pool = LiquidityPool()
+    abc_token = Token(name="ABC", symbol="ABC")
+    btc_token = Token(name="Bitcoin", symbol="BTC")
+    abc_amount = 1000
+    btc_amount = 1
+    user_address = "user_address"
+    
+    # add liquidity to the pool
+    pool.add_liquidity(abc_token, abc_amount, btc_token, btc_amount, user_address)
+    
+    # simulate a negative slippage trade
+    trade_amount = 1500
+    expected_abc_amount = 500
+    actual_abc_amount = pool.trade(btc_token, trade_amount, abc_token, user_ad
+  ```
