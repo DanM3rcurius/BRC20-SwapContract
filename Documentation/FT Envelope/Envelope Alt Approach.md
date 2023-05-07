@@ -1,5 +1,6 @@
 # Alternative envelope approach
-In this prompt sequence I started with a fresh chat that had to Ordinal or BRC20 references or data inputs.
+In this prompt sequence I started with a fresh chat that had to Ordinal or BRC20 references or data inputs. I fed it an article on ordinal theory and then wanted to start a prompt sequence with test driven develpoment in mind.
+
 #### I asked ChatGPT:
 Lets say I want to use bitcoin and the taproot capabilities to create a token envelope dedicated to fungible tokens, that is fully compatible with the following standard: https://github.com/bitcoin-computer/monorepo/tree/main/packages/BRC20 
 
@@ -19,7 +20,7 @@ It replied:
 >Once the smart contract has been implemented, you would need to deploy it to the Bitcoin network and test it thoroughly to ensure that it works as expected. It's also important to ensure that the smart contract is secure and resistant to attacks.
 
 
-#### Inquiry into  logic
+#### Inquiry into logic
 Next I asked to please write the envelope logic in Miniscript with a doubble spend protection.
 It replied:
 
@@ -27,7 +28,7 @@ It replied:
   
 >Here's an example script that implements the token envelope:
 
-```
+```javascript
 IF
   // Check if the transaction input is signed with the correct key
   <Pubkey> CHECKSIGVERIFY
@@ -57,7 +58,7 @@ ENDIF
 
 >Here's an example implementation of the `createToken` function:
 
-```
+```sql
 OP_IF
   // Check if the provided attributes are valid
   <Validate Token Attributes>
