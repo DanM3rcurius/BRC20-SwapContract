@@ -1,5 +1,8 @@
 # Alternative envelope approach
-In this prompt sequence I started with a fresh chat that had to Ordinal or BRC20 references or data inputs. I fed it an article on ordinal theory and then wanted to start a prompt sequence with test driven develpoment in mind.
+In this prompt sequence I started with a fresh chat that had no Ordinal or BRC20 references or data inputs. I fed it one article on ordinal theory and then wanted it to create a BRC20 Smart Contract standrad compatbile FT envelope.
+
+## This is just an experiment!
+It wouldn't make sense to create another FT smart contract standard, as Trustless Computer is already on it. It would make more sense to focus on a non smart contract enhanced one that is alleviating the congestion of the mempool. 
 
 #### I asked ChatGPT:
 Lets say I want to use bitcoin and the taproot capabilities to create a token envelope dedicated to fungible tokens, that is fully compatible with the following standard: https://github.com/bitcoin-computer/monorepo/tree/main/packages/BRC20 
