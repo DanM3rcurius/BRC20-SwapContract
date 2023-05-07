@@ -23,7 +23,7 @@ I felt this was a more "organic" way of composing the smart contract with ChatGP
 ### Initialization
 Here is an example of how the smart contract initialization logic could be written in Miniscript for a Bitcoin-based liquidity pool:
 
-```
+```scss
 // Define the two wallets for holding BTC and ABC tokens
 wallet(btc_wallet)
 wallet(abc_wallet)
@@ -57,9 +57,9 @@ We then define three different transactions using the `funding_tx()`, `refund_tx
 Overall, this initialization logic sets up the basic parameters of the liquidity pool smart contract using Miniscript, which can then be built upon to add additional functionality.
 
 #### Now I asked how the code changes if the token is always on the first satoshi of a UTXO
-Then the smart contract initialization logic in Miniscript would need to be modified slightly. Here is an updated example:
+> Then the smart contract initialization logic in Miniscript would need to be modified slightly. Here is an updated example:
 
-```
+```scss
 // Define the two wallets for holding BTC and ABC tokens
 wallet(btc_wallet)
 wallet(abc_wallet)
@@ -87,16 +87,17 @@ pool_tx(btc_balance, btc_wallet, abc_balance, abc_wallet, exchange_rate)
 require_sats(SAT, abc_wallet)
 ```
 
-In this updated code, we add a `require_sats()` function at the end of the script to ensure that the ABC token always resides on the first satoshi of a UTXO. This is necessary because if the ABC token were to move to a different satoshi, it could invalidate the smart contract logic and compromise the security of the liquidity pool.
+> In this updated code, we add a `require_sats()` function at the end of the script to ensure that the ABC token always resides on the first satoshi of a UTXO. This is necessary because if the ABC token were to move to a different satoshi, it could invalidate the smart contract logic and compromise the security of the liquidity pool.
 
-We also modify the `abc_balance` variable to be equal to 1 SAT, since the ABC token always resides on the first satoshi of a UTXO. Finally, we remove the check for `abc_balance > 0` in the `Verify` statement, since it is now fixed at 1 SAT.
+> We also modify the `abc_balance` variable to be equal to 1 SAT, since the ABC token always resides on the first satoshi of a UTXO. Finally, we remove the check for `abc_balance > 0` in the `Verify` statement, since it is now fixed at 1 SAT.
+**The last paragraph about changing the variable to 1 SAT doesn' make sense to me and needs to be revisited.**
 
 
 ### I asked to wirte the "add liquidity" logic
 
-Here's an example of how the "adding liquidity" logic could be written in Miniscript for the Bitcoin-based liquidity pool with ABC tokens always residing on the first satoshi of a UTXO:
+> Here's an example of how the "adding liquidity" logic could be written in Miniscript for the Bitcoin-based liquidity pool with ABC tokens always residing on the first satoshi of a UTXO:
 
-```
+```scss
 // Define the two wallets for holding BTC and ABC tokens
 wallet(btc_wallet)
 wallet(abc_wallet)
@@ -140,19 +141,20 @@ abc_balance = total_abc
 "Liquidity added successfully"
 end
 ```
+
 #### Here is an overview of how this logic works:
-In this Miniscript code, we define the `add_liquidity()` function which handles the process of adding liquidity to the pool. This function takes two arguments, `btc_amount` and `abc_amount`, which represent the amount of BTC and ABC tokens to add to the pool.
+> In this Miniscript code, we define the `add_liquidity()` function which handles the process of adding liquidity to the pool. This function takes two arguments, `btc_amount` and `abc_amount`, which represent the amount of BTC and ABC tokens to add to the pool.
 
-Inside the function, we calculate the total amount of BTC and ABC tokens in the pool by adding the `btc_amount` and `abc_amount` arguments to the current `btc_balance` and `abc_balance` variables. We then create a new UTXO to represent the added liquidity using the `funding_tx()` function.
+> Inside the function, we calculate the total amount of BTC and ABC tokens in the pool by adding the `btc_amount` and `abc_amount` arguments to the current `btc_balance` and `abc_balance` variables. We then create a new UTXO to represent the added liquidity using the `funding_tx()` function.
 
-After creating the new UTXO, we update the `btc_balance` and `abc_balance` variables to reflect the added liquidity, and return a success message.
+> After creating the new UTXO, we update the `btc_balance` and `abc_balance` variables to reflect the added liquidity, and return a success message.
 
-This `add_liquidity()` function can be called by users who want to add liquidity to the pool, and it will update the pool balances accordingly. Note that in a real-world implementation, additional security measures would need to be taken to ensure that users are only able to add liquidity to the pool, and not withdraw funds or perform other unauthorized actions.
+> This `add_liquidity()` function can be called by users who want to add liquidity to the pool, and it will update the pool balances accordingly. Note that in a real-world implementation, additional security measures would need to be taken to ensure that users are only able to add liquidity to the pool, and not withdraw funds or perform other unauthorized actions.
 
 
 ### I asked to write the logic for "Removing Liquidity"
 
-```
+```less
 OP_IF
 // Check that the transaction is authorized by the liquidity pool manager or a designated administrator
 <manager_pubkey> OP_CHECKSIGVERIFY
@@ -196,7 +198,7 @@ It is worth noting that this is just one example of how the "removing liquidity"
 
 Here's an updated version of the "removing liquidity" logic that includes a 24-hour timelock:
 
-```
+```less
 IF
 // Check that the transaction is authorized by the pool manager or administrator
 <manager pubkey> CHECKSIGVERIFY
@@ -225,10 +227,9 @@ If the timelock has not yet expired, the script will create a new output with a 
 This additional timelock adds an extra layer of security to the liquidity pool, helping to prevent malicious actors from quickly draining the pool or manipulating the exchange rate in a short amount of time.
 
 ## Trading logic
-
 A trading logic that incorporates best upgradability and security measures:
 
-```
+```php
 IF
 // Check that the transaction is authorized by the pool manager or administrator
 <manager pubkey> CHECKSIGVERIFY
@@ -271,11 +272,10 @@ ELSE
 ENDIF
 ```
 #### Here is an overview of how this logic works:
+> In this trading logic, the script first checks that the transaction is authorized by the pool manager or administrator, and that the trade is within the pool's trading limits and liquidity. It then calculates the exchange rate and checks that it falls within acceptable limits. If all checks pass, the trade can be executed.
 
-In this trading logic, the script first checks that the transaction is authorized by the pool manager or administrator, and that the trade is within the pool's trading limits and liquidity. It then calculates the exchange rate and checks that it falls within acceptable limits. If all checks pass, the trade can be executed.
+> If the transaction is not authorized by the pool manager or administrator, the script checks that the input signature is valid, and performs the same checks for trade limits and liquidity. It then calculates the exchange rate and the output amounts for the trader and the pool, and creates the corresponding outputs.
 
-If the transaction is not authorized by the pool manager or administrator, the script checks that the input signature is valid, and performs the same checks for trade limits and liquidity. It then calculates the exchange rate and the output amounts for the trader and the pool, and creates the corresponding outputs.
+> This trading logic also includes a flexible fee structure that allows for easy upgradability in the future. The `<pool token fee>` and `<pool native fee>` values represent the fees that the pool charges for each trade, and can be adjusted as necessary.
 
-This trading logic also includes a flexible fee structure that allows for easy upgradability in the future. The `<pool token fee>` and `<pool native fee>` values represent the fees that the pool charges for each trade, and can be adjusted as necessary.
-
-Overall, this trading logic incorporates a number of security measures to ensure that trades are executed safely and that the pool's liquidity is protected. It also allows for easy upgradability in the future, making it a flexible and future-proof solution for a bitcoin liquidity pool.
+> Overall, this trading logic incorporates a number of security measures to ensure that trades are executed safely and that the pool's liquidity is protected. It also allows for easy upgradability in the future, making it a flexible and future-proof solution for a bitcoin liquidity pool.
